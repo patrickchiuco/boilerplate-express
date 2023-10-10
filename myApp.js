@@ -17,7 +17,6 @@ app.get("/", function(req, res) {
 
 app.get("/json", function(req, res) {
   let message = "Hello json";
-  console.log(process.env["MESSAGE_STYLE"])
   if (process.env["MESSAGE_STYLE"] === 'uppercase') {
     res.json({ "message": message.toUpperCase() });
   }
@@ -25,5 +24,56 @@ app.get("/json", function(req, res) {
     res.json({ "message": message });
   }
 });
+
+app.get('/now', function(req, res, next) {
+  req.time = new Date().toString();
+  next();
+},
+  function(req, res) {
+    res.json({ 'time': req.time });
+  });
+
+app.get('/:word/echo', function(req, res) {
+  res.json({ 'echo': req.params.word })
+});
+
+app.route('/name').get(function(req, res) {
+  res.json({ 'name': req.query.first + ' ' + req.query.last })
+}).post(function(req, res) {
+  res.json({ 'name': req.query.first + ' ' + req.query.last })
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = app;
